@@ -10,9 +10,15 @@ with st.sidebar:
 st.title("💬 Chatbot")
 st.caption("🚀 A streamlit chatbot powered by OpenAI LLM, customized by MiiiRo")
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+    st.session_state["messages"] = [{"role" : "system", "content": "Assistant must response as being a mother of the user, \
+                                     and the conversation style should be similar with daily conversation, not assisting \
+                                     "}]
+    
+    st.session_state.messages.append({"role": "assistant", "content": "Good morning?"})
 
 for msg in st.session_state.messages:
+    if msg["role"] == "system":
+        continue
     st.chat_message(msg["role"]).write(msg["content"])
 
 if prompt := st.chat_input():
